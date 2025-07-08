@@ -163,6 +163,7 @@ function searchInPage(searchTerm: string): void {
   }
 
   updateCountDisplay(totalCount, itemCount);
+  changeBackgroundColor();
 }
 
 // ページ読み込み時に検索ボックスを挿入
@@ -170,4 +171,61 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', insertSearchBox);
 } else {
   insertSearchBox();
+}
+
+/**
+ * 枚数に応じて背景色を決定する
+ * @param count 商品の枚数
+ * @returns 背景色のカラーコード。対象外の枚数の場合はnullを返す
+ */
+function getBackgroundColorByCount(count: number): string | null {
+  switch (count) {
+    case 4:
+      return '#da3e50'; // 赤色
+    case 3:
+      return '#f0c14b'; // 黄色
+    case 2:
+      return '#4caf50'; // 緑色
+    case 1:
+      return '#2196f3'; // 青色
+    default:
+      return null;
+  }
+}
+
+/**
+ * 枚数によって現在表示されている商品の背景色を変更する
+ * フィルタリングで非表示になっている商品は処理しない
+ */
+function changeBackgroundColor() {
+  const itemElements = [
+    ...document.querySelectorAll('[data-testid="merListItem-container"]'),
+  ];
+
+  for (const itemElement of itemElements) {
+    const htmlElement = itemElement as HTMLElement;
+
+    // フィルタリング後に非表示になっている商品は処理しない
+    if (htmlElement.getAttribute('data-search-hidden') === 'true') {
+      continue;
+    }
+
+    const itemMessage = getTextContent(itemElement, 'p');
+    const name = getItemName(itemMessage);
+
+    if (!name) {
+      continue;
+    }
+
+    const count = getItemCount(name);
+    const backgroundColor = getBackgroundColorByCount(count);
+
+    // 背景色をリセット
+    htmlElement.style.backgroundColor = '';
+
+    // 枚数に応じて背景色を設定
+    if (backgroundColor) {
+      htmlElement.style.backgroundColor = backgroundColor;
+    }
+  }
 }
