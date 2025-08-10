@@ -31,11 +31,23 @@ async function loadSettings(): Promise<MonitoringSettings> {
  */
 function checkTargetElement(): void {
   const targetElements = document.querySelectorAll(TARGET_SELECTOR);
+  // 商品の説明欄
+  const description = document.querySelector('textarea[name="description"]');
 
   if (!targetElements || targetElements.length === 0) {
     logger.log(
       'sell_create_content',
       `対象要素が見つかりません: ${TARGET_SELECTOR}`,
+    );
+    return;
+  }
+
+  // descriptionにテキストが1文字以上設定されているかチェック
+  const descriptionText = description?.value || '';
+  if (descriptionText.length === 0) {
+    logger.log(
+      'sell_create_content',
+      'description未入力のため監視をスキップします',
     );
     return;
   }

@@ -4,7 +4,7 @@ import { defineConfig } from 'vite';
 const manifest = defineManifest({
   manifest_version: 3,
   name: 'やることリスト枚数確認',
-  version: '1.0.0',
+  version: '1.1.1',
   description: 'やることリストで各商品の枚数と件数を確認する拡張機能',
   permissions: ['tabs', 'activeTab', 'scripting', 'storage'],
   host_permissions: [
