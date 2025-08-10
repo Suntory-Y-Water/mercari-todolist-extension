@@ -13,3 +13,13 @@ export type Item = {
   name: string;
   thumbnail: string;
 };
+
+export interface MonitoringSettings {
+  interval: number;
+  enabled: boolean;
+}
+
+export interface ChromeMessage {
+  action: string;
+  settings?: MonitoringSettings;
+}
