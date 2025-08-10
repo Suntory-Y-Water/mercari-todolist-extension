@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>らくらくメルカリ便監視設定</title>
+  <style>
+    body {
+      width: 300px;
+      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 14px;
+      line-height: 1.4;
+      margin: 0;
+    }
+    
+    h1 {
+      font-size: 16px;
+      margin: 0 0 20px 0;
+      color: #333;
+      text-align: center;
+    }
+    
+    .setting-group {
+      margin-bottom: 20px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+      color: #333;
+    }
+    
+    input[type="number"] {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    
+    .radio-group {
+      display: flex;
+      gap: 15px;
+      margin-top: 5px;
+    }
+    
+    .radio-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    input[type="radio"] {
+      margin: 0;
+    }
+    
+    .radio-item label {
+      margin: 0;
+      font-weight: normal;
+      cursor: pointer;
+    }
+    
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #ff6b35;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    
+    button:hover {
+      background-color: #e55a2e;
+    }
+    
+    .status {
+      margin-top: 10px;
+      padding: 8px;
+      border-radius: 4px;
+      text-align: center;
+      font-size: 12px;
+      display: none;
+    }
+    
+    .status.success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    
+    .status.error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+  </style>
+</head>
+<body>
+  <h1>らくらくメルカリ便監視設定</h1>
+  
+  <div class="setting-group">
+    <label for="interval">監視間隔（秒）</label>
+    <input type="number" id="interval" min="1" max="60" value="1">
+  </div>
+  
+  <div class="setting-group">
+    <label>監視機能</label>
+    <div class="radio-group">
+      <div class="radio-item">
+        <input type="radio" id="enabled" name="monitoring" value="true">
+        <label for="enabled">有効</label>
+      </div>
+      <div class="radio-item">
+        <input type="radio" id="disabled" name="monitoring" value="false" checked>
+        <label for="disabled">無効</label>
+      </div>
+    </div>
+  </div>
+  
+  <button id="save">設定を保存</button>
+  
+  <div id="status" class="status"></div>
+  
+  <script type="module" src="popup.ts"></script>
+</body>
+</html>

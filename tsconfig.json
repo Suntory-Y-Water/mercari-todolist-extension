@@ -20,7 +20,7 @@
     "noFallthroughCasesInSwitch": true,
 
     /* Types */
-    "types": ["typed-query-selector"]
+    "types": ["typed-query-selector", "@types/chrome"]
   },
   "include": ["src"]
 }
