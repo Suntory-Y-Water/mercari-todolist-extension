@@ -17,6 +17,9 @@ export type Item = {
 export interface MonitoringSettings {
   interval: number;
   enabled: boolean;
+  showAlert: boolean;
+  autoChangeEnabled: boolean;
+  waitTime: number;
 }
 
 export interface ChromeMessage {

@@ -3,6 +3,9 @@ import type { MonitoringSettings } from './types/index';
 const DEFAULT_SETTINGS: MonitoringSettings = {
   interval: 1,
   enabled: false,
+  showAlert: true,
+  autoChangeEnabled: false,
+  waitTime: 1000,
 };
 
 /**
@@ -75,6 +78,10 @@ async function initializePopup(): Promise<void> {
   const intervalInput = document.getElementById('interval') as HTMLInputElement;
   const enabledRadio = document.getElementById('enabled') as HTMLInputElement;
   const disabledRadio = document.getElementById('disabled') as HTMLInputElement;
+  const alertEnabledRadio = document.getElementById('alertEnabled') as HTMLInputElement;
+  const alertDisabledRadio = document.getElementById('alertDisabled') as HTMLInputElement;
+  const autoChangeEnabledRadio = document.getElementById('autoChangeEnabled') as HTMLInputElement;
+  const autoChangeDisabledRadio = document.getElementById('autoChangeDisabled') as HTMLInputElement;
 
   if (intervalInput) {
     intervalInput.value = settings.interval.toString();
@@ -84,6 +91,18 @@ async function initializePopup(): Promise<void> {
     if (enabledRadio) enabledRadio.checked = true;
   } else {
     if (disabledRadio) disabledRadio.checked = true;
+  }
+
+  if (settings.showAlert) {
+    if (alertEnabledRadio) alertEnabledRadio.checked = true;
+  } else {
+    if (alertDisabledRadio) alertDisabledRadio.checked = true;
+  }
+
+  if (settings.autoChangeEnabled) {
+    if (autoChangeEnabledRadio) autoChangeEnabledRadio.checked = true;
+  } else {
+    if (autoChangeDisabledRadio) autoChangeDisabledRadio.checked = true;
   }
 }
 
@@ -103,9 +122,17 @@ function setupEventListeners(): void {
         const enabledRadio = document.getElementById(
           'enabled',
         ) as HTMLInputElement;
+        const alertEnabledRadio = document.getElementById(
+          'alertEnabled',
+        ) as HTMLInputElement;
+        const autoChangeEnabledRadio = document.getElementById(
+          'autoChangeEnabled',
+        ) as HTMLInputElement;
 
         const interval = Number.parseInt(intervalInput?.value || '1', 10);
         const enabled = enabledRadio?.checked || false;
+        const showAlert = alertEnabledRadio?.checked || false;
+        const autoChangeEnabled = autoChangeEnabledRadio?.checked || false;
 
         if (interval < 1 || interval > 60) {
           showStatus('監視間隔は1～60秒の範囲で入力してください', true);
@@ -115,6 +142,9 @@ function setupEventListeners(): void {
         const settings: MonitoringSettings = {
           interval,
           enabled,
+          showAlert,
+          autoChangeEnabled,
+          waitTime: 1000,
         };
 
         await saveSettings(settings);
