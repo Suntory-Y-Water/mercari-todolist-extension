@@ -3,14 +3,15 @@ import { defineConfig } from 'vite';
 
 const manifest = defineManifest({
   manifest_version: 3,
-  name: 'やることリスト枚数確認',
-  version: '1.1.1',
+  name: 'メルアシスト++',
+  version: '1.2.0',
   description: 'やることリストで各商品の枚数と件数を確認する拡張機能',
   permissions: ['tabs', 'activeTab', 'scripting', 'storage'],
   host_permissions: [
     'https://jp.mercari.com/todos',
     'http://localhost:5173/*', // 開発環境用
     'https://jp.mercari.com/sell/create',
+    "https://jp.mercari.com/sell/shipping_methods"
   ],
   content_scripts: [
     {
@@ -18,7 +19,7 @@ const manifest = defineManifest({
       js: ['src/content.ts'],
     },
     {
-      matches: ['https://jp.mercari.com/sell/create'],
+      matches: ['https://jp.mercari.com/sell/create',"https://jp.mercari.com/sell/shipping_methods"],
       js: ['src/sell-create-content.ts'],
     },
   ],
@@ -35,6 +36,7 @@ export default defineConfig({
     emptyOutDir: true,
   },
   server: {
+    host: "0.0.0.0",
     port: 5173,
     strictPort: true,
     hmr: {
